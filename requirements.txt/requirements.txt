@@ -1,0 +1,16 @@
+Flask
+Flask-CORS
+SQLAlchemy
+NumPy
+SciPy
+scikit-learn
+geopy
+haversine
+Celery
+Redis
+Flask-JWT-Extended
+pytest
+pytest-cov
+Black
+Flake8
+Pylint
