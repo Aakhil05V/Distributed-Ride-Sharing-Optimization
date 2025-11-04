@@ -1,316 +1,357 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Distributed Ride-Sharing Optimization</title>
-  <style>
-    /* Distributed Ride-Sharing Optimization Platform - Styles */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: #333;
-      min-height: 100vh;
-      padding: 20px;
-    }
-    header {
-      background-color: #fff;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      margin-bottom: 30px;
-      text-align: center;
-    }
-    header h1 {
-      color: #667eea;
-      font-size: 2.5em;
-      margin-bottom: 10px;
-    }
-    header p {
-      color: #666;
-      font-size: 1.1em;
-    }
-    main {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    section {
-      background-color: #fff;
-      padding: 25px;
-      border-radius: 10px;
-      margin-bottom: 25px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-    section h2 {
-      color: #667eea;
-      margin-bottom: 20px;
-      font-size: 1.8em;
-      border-bottom: 2px solid #667eea;
-      padding-bottom: 10px;
-    }
-    input[type="text"] {
-      width: 100%;
-      padding: 12px;
-      margin-bottom: 15px;
-      border: 2px solid #ddd;
-      border-radius: 5px;
-      font-size: 1em;
-      transition: border-color 0.3s ease;
-    }
-    input[type="text"]:focus {
-      outline: none;
-      border-color: #667eea;
-      box-shadow: 0 0 5px rgba(102, 126, 234, 0.3);
-    }
-    button {
-      background-color: #667eea;
-      color: white;
-      padding: 12px 30px;
-      border: none;
-      border-radius: 5px;
-      font-size: 1em;
-      cursor: pointer;
-      margin-right: 10px;
-      margin-bottom: 10px;
-      transition: background-color 0.3s ease, transform 0.2s ease;
-    }
-    button:hover {
-      background-color: #764ba2;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    }
-    button:active {
-      transform: translateY(0);
-    }
-    #rider-section {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-    }
-    #rider-section h2 {
-      color: #fff;
-      border-bottom-color: #fff;
-    }
-    #rider-section input[type="text"] {
-      border-color: rgba(255, 255, 255, 0.3);
-      background-color: rgba(255, 255, 255, 0.1);
-      color: white;
-    }
-    #rider-section input[type="text"]::placeholder {
-      color: rgba(255, 255, 255, 0.7);
-    }
-    #driver-section {
-      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-      color: white;
-    }
-    #driver-section h2 {
-      color: #fff;
-      border-bottom-color: #fff;
-    }
-    #driver-section input[type="text"] {
-      border-color: rgba(255, 255, 255, 0.3);
-      background-color: rgba(255, 255, 255, 0.1);
-      color: white;
-    }
-    #driver-section input[type="text"]::placeholder {
-      color: rgba(255, 255, 255, 0.7);
-    }
-    #results {
-      background-color: #f9f9f9;
-    }
-    #matches-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-      gap: 20px;
-    }
-    #matches-container > div {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      border-left: 5px solid #667eea;
-      padding: 20px;
-      border-radius: 8px;
-      color: white;
-    }
-    #matches-container h3 {
-      margin-bottom: 15px;
-      font-size: 1.3em;
-    }
-    #matches-container p {
-      margin: 10px 0;
-      line-height: 1.6;
-    }
-    #matches-container strong {
-      display: inline-block;
-      min-width: 100px;
-      color: #fff;
-    }
-    footer {
-      background-color: #fff;
-      padding: 20px;
-      border-radius: 10px;
-      text-align: center;
-      color: #666;
-      margin-top: 30px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-    /* Responsive Design */
-    @media (max-width: 768px) {
-      header h1 {
-        font-size: 2em;
-      }
-      section {
-        padding: 15px;
-      }
-      section h2 {
-        font-size: 1.5em;
-      }
-      #matches-container {
-        grid-template-columns: 1fr;
-      }
-      button {
-        width: 100%;
-        margin-right: 0;
-      }
-      input[type="text"] {
-        font-size: 16px; /* Prevents zoom on iOS */
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Distributed Ride-Sharing Optimization</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        header {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        header h1 {
+            color: #667eea;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+        
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+        
+        section {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+        
+        section h2 {
+            color: #764ba2;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+        
+        input {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        button {
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        #results {
+            grid-column: 1 / -1;
+        }
+        
+        #matches-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .match-card {
+            background-color: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            transition: transform 0.2s;
+        }
+        
+        .match-card:hover {
+            transform: translateX(5px);
+        }
+        
+        .match-card h3 {
+            color: #764ba2;
+            margin-bottom: 0.5rem;
+        }
+        
+        .match-card p {
+            color: #666;
+            margin-bottom: 0.3rem;
+        }
+        
+        footer {
+            background-color: rgba(255, 255, 255, 0.95);
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            color: #666;
+        }
+        
+        .status-message {
+            padding: 1rem;
+            margin-top: 1rem;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .status-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .status-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+            
+            main {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <h1>Ride-Sharing Optimization Platform</h1>
-    <p>Efficient matching of riders and drivers using advanced algorithms</p>
-  </header>
-
-  <main>
-    <section id="rider-section">
-      <h2>Rider Information</h2>
-      <input type="text" id="rider-location" placeholder="Enter your current location">
-      <input type="text" id="rider-destination" placeholder="Enter your destination">
-      <button id="request-ride">Request Ride</button>
-    </section>
-
-    <section id="driver-section">
-      <h2>Driver Dashboard</h2>
-      <input type="text" id="driver-location" placeholder="Enter your current location">
-      <button id="go-online">Go Online</button>
-      <button id="go-offline">Go Offline</button>
-    </section>
-
-    <section id="results">
-      <h2>Matching Results</h2>
-      <div id="matches-container"></div>
-    </section>
-  </main>
-
-  <footer>
-    <p>© 2025 Distributed Ride-Sharing Optimization. All rights reserved.</p>
-  </footer>
-
-  <script>
-    class RideShareOptimizer {
-      constructor() {
-        this.riders = [];
-        this.drivers = [];
-        this.matches = [];
-        this.initializeEventListeners();
-      }
-
-      initializeEventListeners() {
-        document.getElementById('request-ride').onclick = () => this.requestRide();
-        document.getElementById('go-online').onclick = () => this.driverOnline();
-        document.getElementById('go-offline').onclick = () => this.driverOffline();
-      }
-
-      requestRide() {
-        const location = document.getElementById('rider-location').value;
-        const destination = document.getElementById('rider-destination').value;
-        if (!location || !destination) {
-          alert('Please enter both location and destination!');
-          return;
+    <header>
+        <h1>Ride-Sharing Optimization Platform</h1>
+        <p>Efficient matching of riders and drivers using advanced algorithms</p>
+    </header>
+    
+    <main>
+        <section id="rider-section">
+            <h2>Rider Information</h2>
+            <input type="text" id="rider-location" placeholder="Enter your current location">
+            <input type="text" id="rider-destination" placeholder="Enter your destination">
+            <button id="request-ride">Request Ride</button>
+        </section>
+        
+        <section id="driver-section">
+            <h2>Driver Dashboard</h2>
+            <input type="text" id="driver-location" placeholder="Enter your current location">
+            <button id="go-online">Go Online</button>
+            <button id="go-offline">Go Offline</button>
+        </section>
+        
+        <section id="results">
+            <h2>Matching Results</h2>
+            <div id="matches-container"></div>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Distributed Ride-Sharing Optimization. All rights reserved.</p>
+    </footer>
+    
+    <script>
+        // Simulated data storage
+        let riders = [];
+        let drivers = [];
+        let driverStatus = {};
+        
+        // Get DOM elements
+        const riderLocationInput = document.getElementById('rider-location');
+        const riderDestinationInput = document.getElementById('rider-destination');
+        const requestRideBtn = document.getElementById('request-ride');
+        const driverLocationInput = document.getElementById('driver-location');
+        const goOnlineBtn = document.getElementById('go-online');
+        const goOfflineBtn = document.getElementById('go-offline');
+        const matchesContainer = document.getElementById('matches-container');
+        
+        // Calculate simple distance (simulated)
+        function calculateDistance(loc1, loc2) {
+            // Simple hash-based distance simulation
+            const hash1 = loc1.split('').reduce((a, b) => a + b.charCodeAt(0), 0);
+            const hash2 = loc2.split('').reduce((a, b) => a + b.charCodeAt(0), 0);
+            return Math.abs(hash1 - hash2) % 100;
         }
-        this.riders.push({ location, destination });
-        this.findOptimalMatch();
-      }
-
-      driverOnline() {
-        const location = document.getElementById('driver-location').value;
-        if (!location) {
-          alert('Please enter your location!');
-          return;
-        }
-        this.drivers.push({ location, online: true });
-        this.findOptimalMatch();
-      }
-
-      driverOffline() {
-        const location = document.getElementById('driver-location').value;
-        this.drivers = this.drivers.filter(driver => driver.location !== location);
-        this.findOptimalMatch();
-      }
-
-      findOptimalMatch() {
-        // Clear previous matches
-        this.matches = [];
-        if (this.riders.length === 0 || this.drivers.length === 0) {
-          this.displayResults();
-          return;
-        }
-        // Simple matching logic: closest driver
-        this.riders.forEach(rider => {
-          let bestDriver = null;
-          let bestDistance = Infinity;
-          this.drivers.forEach(driver => {
-            if (driver.online) {
-              const distance = this.calculateDistance(rider.location, driver.location);
-              if (distance < bestDistance) {
-                bestDistance = distance;
-                bestDriver = driver;
-              }
+        
+        // Find best matches
+        function findMatches(rider) {
+            const availableDrivers = drivers.filter(d => driverStatus[d.id]);
+            
+            if (availableDrivers.length === 0) {
+                return [];
             }
-          });
-          if (bestDriver) {
-            this.matches.push({
-              rider: rider,
-              driver: bestDriver,
-              distance: bestDistance
+            
+            const matches = availableDrivers.map(driver => {
+                const distance = calculateDistance(rider.location, driver.location);
+                return {
+                    driver: driver,
+                    distance: distance,
+                    score: 100 - distance
+                };
             });
-          }
-        });
-        this.displayResults();
-      }
-
-      calculateDistance(loc1, loc2) {
-        // For demo: string similarity as "distance". Replace with real geospatial calculation.
-        if (loc1 === loc2) return 0;
-        return Math.abs(loc1.length - loc2.length) + 3;
-      }
-
-      displayResults() {
-        const container = document.getElementById('matches-container');
-        container.innerHTML = '';
-        if (this.matches.length === 0) {
-          container.innerHTML = '<p>No matches found. Please add riders and drivers.</p>';
-          return;
+            
+            matches.sort((a, b) => b.score - a.score);
+            return matches.slice(0, 3);
         }
-        this.matches.forEach((match, idx) => {
-          const matchDiv = document.createElement('div');
-          matchDiv.innerHTML = `
-            <h3>Match #${idx + 1}</h3>
-            <p><strong>Rider Location:</strong> ${match.rider.location}</p>
-            <p><strong>Rider Destination:</strong> ${match.rider.destination}</p>
-            <p><strong>Driver Location:</strong> ${match.driver.location}</p>
-            <p><strong>Distance Metric:</strong> ${match.distance}</p>
-          `;
-          container.appendChild(matchDiv);
+        
+        // Display matches
+        function displayMatches(matches, rider) {
+            matchesContainer.innerHTML = '';
+            
+            if (matches.length === 0) {
+                matchesContainer.innerHTML = '<div class="status-message status-error">No available drivers found. Please try again later.</div>';
+                return;
+            }
+            
+            matches.forEach((match, index) => {
+                const card = document.createElement('div');
+                card.className = 'match-card';
+                card.innerHTML = `
+                    <h3>Match #${index + 1}</h3>
+                    <p><strong>Driver:</strong> Driver ${match.driver.id}</p>
+                    <p><strong>Location:</strong> ${match.driver.location}</p>
+                    <p><strong>Distance:</strong> ${match.distance} units</p>
+                    <p><strong>Match Score:</strong> ${match.score}%</p>
+                `;
+                matchesContainer.appendChild(card);
+            });
+            
+            const successMsg = document.createElement('div');
+            successMsg.className = 'status-message status-success';
+            successMsg.textContent = `Found ${matches.length} driver(s) for your ride from ${rider.location} to ${rider.destination}`;
+            matchesContainer.insertBefore(successMsg, matchesContainer.firstChild);
+        }
+        
+        // Request ride handler
+        requestRideBtn.addEventListener('click', () => {
+            const location = riderLocationInput.value.trim();
+            const destination = riderDestinationInput.value.trim();
+            
+            if (!location || !destination) {
+                matchesContainer.innerHTML = '<div class="status-message status-error">Please enter both location and destination.</div>';
+                return;
+            }
+            
+            const rider = {
+                id: riders.length + 1,
+                location: location,
+                destination: destination,
+                timestamp: new Date()
+            };
+            
+            riders.push(rider);
+            
+            const matches = findMatches(rider);
+            displayMatches(matches, rider);
+            
+            // Clear inputs
+            riderLocationInput.value = '';
+            riderDestinationInput.value = '';
         });
-      }
-    }
-    new RideShareOptimizer();
-  </script>
+        
+        // Go online handler
+        goOnlineBtn.addEventListener('click', () => {
+            const location = driverLocationInput.value.trim();
+            
+            if (!location) {
+                alert('Please enter your location first.');
+                return;
+            }
+            
+            const driver = {
+                id: drivers.length + 1,
+                location: location,
+                timestamp: new Date()
+            };
+            
+            drivers.push(driver);
+            driverStatus[driver.id] = true;
+            
+            alert(`Driver ${driver.id} is now online at ${location}`);
+            driverLocationInput.value = '';
+        });
+        
+        // Go offline handler
+        goOfflineBtn.addEventListener('click', () => {
+            if (drivers.length === 0) {
+                alert('No active drivers to go offline.');
+                return;
+            }
+            
+            const lastDriverId = drivers[drivers.length - 1].id;
+            driverStatus[lastDriverId] = false;
+            
+            alert(`Driver ${lastDriverId} is now offline.`);
+        });
+        
+        // Initialize with some sample drivers
+        function initializeSampleData() {
+            const sampleLocations = ['Downtown', 'Airport', 'Stadium', 'Mall', 'University'];
+            
+            sampleLocations.forEach((location, index) => {
+                const driver = {
+                    id: index + 1,
+                    location: location,
+                    timestamp: new Date()
+                };
+                drivers.push(driver);
+                driverStatus[driver.id] = true;
+            });
+            
+            console.log('Initialized with', drivers.length, 'sample drivers');
+        }
+        
+        // Initialize on page load
+        initializeSampleData();
+    </script>
 </body>
 </html>
